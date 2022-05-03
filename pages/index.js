@@ -1,51 +1,23 @@
 import Link from 'next/link'
+import { useState } from 'react'
+import Animals from './components/Animals'
 import fetch from 'isomorphic-unfetch'
 
 
-
-
-
 const Home = ({ animals }) => {
-  
-  return (   
-     <div className="h-screen w-screen">   
-        <div className="text-2xl px-8 py-8">Animals Hungry</div>
-        <div className="grid">
-        <table className="table-auto">
-          <tbody>
-            {animals.map(animal => {
-              return (
-                <tr className="py-6" key={animal._id}>
-                  <td><div className="text-2xl text-center">{animal.name}</div></td>
-                  <td className='inline-flex px-6'>{Home.generateRadioButtons(animal.numberOfMeals, animal.currentMeal)}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+  let isEdited = false
+  return (        
+    <div className="flex justify-center items-center h-screen">
+    <Animals animals={animals} />
+      <div className={isEdited ? undefined : 'hidden'}>
+        <div className="">
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-2 rounded'>Save Changes</button>
         </div>
-   </div>
+      </div> 
+    </div>
   )
 }
-
-Home.generateRadioButtons = (numMeals, currentMeal) => {
-  let radioButtons = [];
-  let mealFed
-  for (let index = 1; index < numMeals+1; index++) {
-    mealFed = currentMeal >= index ? true : false
-
-    radioButtons.push(
-      <div key={index} className="form-check px-6">
-        <input defaultChecked={mealFed} className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 my-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="checkbox" />
-      </div> 
-    )
-  }
-  return radioButtons;
-}
-
-
-
-
+// Retrieve initial data 
 Home.getInitialProps = async () => {
   const res = await fetch('http://localhost:3000/api/animals')
   const { data } = await res.json();
