@@ -11,6 +11,10 @@ const AnimalSchema = new mongoose.Schema({
     numberOfMeals: {
         type: Number,
         required: true
+    },
+    currentMeal: {
+        type: Number,
+        required: true
     }
 })
 
