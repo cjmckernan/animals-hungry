@@ -5,10 +5,15 @@ import fetch from 'isomorphic-unfetch'
 
 
 const Home = ({ animals }) => {
-  let isEdited = false
+  const[isEdited, dataChanged] = useState(false)
+
+  Home.dataChanged = () => {
+    isEdited = true
+  }
+  
   return (        
     <div className="flex justify-center items-center h-screen">
-    <Animals animals={animals} />
+    <Animals animals={animals}  dataChanged={dataChanged} />
       <div className={isEdited ? undefined : 'hidden'}>
         <div className="">
           <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 py-2 rounded'>Save Changes</button>

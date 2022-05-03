@@ -4,8 +4,23 @@ import { useState } from 'react'
 
 
 
-const Animals = ({animals}) => {
-    return (
+const Animals = ({animals, dataChanged}) => {
+
+  Animals.generateRadioButtons = (numMeals, currentMeal) => {
+    let radioButtons = [];
+    let mealFed
+    for (let index = 1; index < numMeals+1; index++) {
+      mealFed = currentMeal >= index ? true : false
+      radioButtons.push(
+        <div key={index} className="form-check px-6">
+          <input defaultChecked={mealFed} onClick={dataChanged} className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 my-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" type="checkbox" />
+        </div> 
+      )
+    }
+    return radioButtons;
+  }
+
+  return (
         <div>
             <div className="text-2xl">Animals Hungry</div>
                 <table className="table">
@@ -23,20 +38,5 @@ const Animals = ({animals}) => {
         </div>
     )
 }
-
-
-Animals.generateRadioButtons = (numMeals, currentMeal) => {
-    let radioButtons = [];
-    let mealFed
-    for (let index = 1; index < numMeals+1; index++) {
-      mealFed = currentMeal >= index ? true : false
-      radioButtons.push(
-        <div key={index} className="form-check px-6">
-          <input defaultChecked={mealFed} className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 my-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" type="checkbox" />
-        </div> 
-      )
-    }
-    return radioButtons;
-  }
 
 export default Animals
